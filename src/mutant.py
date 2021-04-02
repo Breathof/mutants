@@ -1,3 +1,12 @@
+from data_access import *
+import time
+
+ratio = {
+    "count_mutant_dna": 0,
+    "count_human_dna": 0,
+    "ratio": 0
+}
+
 MAX_SIZE = 8
 BASES = ["A","T","C","G"]
 
@@ -77,3 +86,32 @@ def isMutant(data):
         return firstGen(matrix)
     else:
         return False
+
+def ratio_worker():
+    global ratio
+    while True:
+        time.sleep(5)
+        ratio = calculate_adn_ratio()
+
+def calculate_adn_ratio():
+    humans = get_human_count()
+    mutants = get_mutant_count()
+
+    if mutants != 0:
+        json = {
+            "count_mutant_dna": mutants,
+            "count_human_dna": humans,
+            "ratio": humans/mutants
+        }
+    else:
+        json = {
+            "count_mutant_dna": mutants,
+            "count_human_dna": humans,
+            "ratio": 0
+        }
+    return json
+
+def get_adn_ratio():
+    return ratio
+
+# ratio_worker()

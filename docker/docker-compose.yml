@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+    rabbitmq3:
+        hostname: rabbit
+        image: rabbitmq:3-management
+        environment:
+            - RABBITMQ_DEFAULT_USER=admin
+            - RABBITMQ_DEFAULT_PASS=mypass
+        # volumes:
+        #     - ./db-data:/var/lib/rabbitmq
+        ports: 
+            - "15672:15672"
+            - "5672:5672"
