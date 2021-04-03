@@ -84,6 +84,9 @@ El mismo comando generara un reporte .html que podra encontratlo en la carpeta .
 
 Nota: Se expluyen de los test las funciones calculate_adn_ratio(ya que depende de la data actual en la base de datos) y ratio_worker (ya que no tiene sentido testear un worker).
 
+## CI
+Se implemento continous integration con la herramienta de GitHub Actions. El cual se encarga de correr los testing unitarios cada vez que se hace un push de la solucion.
+
 ## Deployment
 
 Se utilizo una instancia EC2 de AWS para publicar esta solucion. Los endpoints para probar la solucion son:
