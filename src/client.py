@@ -7,6 +7,10 @@ import multiprocessing
 BASES = ["A","T","C","G"]
 MAX_SIZE = 8
 
+PROD_URL='http://18.188.95.255/'
+DEV_URL='http://localhost:8080/'
+ENV_URL=DEV_URL
+
 def postMutants():
     string = ""
     data = []
@@ -16,11 +20,11 @@ def postMutants():
         data.append(string)
         string = ""
     payload = {"dna": data}    
-    response = requests.post('http://localhost:8080/mutant', json=payload)
+    response = requests.post(ENV_URL + '/mutant', json=payload)
     print(response)
 
 def getStats():
-    response = requests.get('http://localhost:8080/stats')
+    response = requests.get(ENV_URL + 'stats')
     print(response.content)
 
 def runPostMutants():
@@ -33,7 +37,7 @@ def runPostMutants():
 
 def runGetStats():
     threads = list()
-    for x in range(100):
+    for x in range(200):
         print(x)
         x = threading.Thread(target=getStats)
         threads.append(x)

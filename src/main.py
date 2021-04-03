@@ -45,7 +45,7 @@ def init_workers():
 
 def init_server():
     from waitress import serve
-    serve(app, host="0.0.0.0", port=8080)
+    serve(app, host="0.0.0.0", port=8080, backlog=1000000)
 
 def init_ratio_worker():
     ratio_thread = threading.Thread(target=ratio_worker)
