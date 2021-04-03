@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify, make_response
-from mutant import isMutant, get_adn_ratio, ratio_worker
-from data_access import insert_human, insert_mutant, init_data_base
+from mutant import isMutant, get_adn_ratio, ratio_worker, saveHuman, saveMutant
 
 import sqlite3 as sl
 import threading
+
 
 app = Flask(__name__)
 app.config["DEBUG"] = False
@@ -30,15 +30,14 @@ def get_stats():
     return make_response(ratio, 200)
 
 
-
 def worker():
     while True:
         while len(mutant_queue) > 0:
             data = mutant_queue.pop(0)
-            insert_mutant(data)
+            saveMutant(data)
         while len(human_queue) > 0:
             data = human_queue.pop(0)
-            insert_human(data)
+            saveHuman(data)
 
 def init_workers():
     worker_thread = threading.Thread(target=worker)
@@ -53,7 +52,6 @@ def init_ratio_worker():
     ratio_thread.start()
 
 if __name__ == "__main__":
-    # init_data_base()
     init_ratio_worker()
     init_workers()
     init_server()

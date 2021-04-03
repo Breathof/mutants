@@ -1,6 +1,7 @@
 import sqlite3 as sl
 import json
 
+
 def insert_mutant(adn_data):
     con = sl.connect('adn.db')
     sql = 'INSERT INTO mutants (adn) values(?)'
@@ -10,7 +11,6 @@ def insert_mutant(adn_data):
             con.execute(sql, data)
         except:
             print("ADN already in base")
-
 
 def insert_human(adn_data):
     con = sl.connect('adn.db')
@@ -36,27 +36,4 @@ def get_mutant_count():
     sql = 'SELECT COUNT(1) FROM mutants'
     with con:
         return con.execute(sql).fetchone()[0]
-
-def init_data_base():
-    con = sl.connect('adn.db')
-
-    with con:
-        con.execute("""
-            CREATE TABLE mutants (
-                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                adn JSON,
-                UNIQUE(adn)
-            );
-        """)
-        
-
-    with con:
-        con.execute("""
-            CREATE TABLE humans (
-                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                adn JSON,
-                UNIQUE(adn)
-
-            );
-        """)
 
